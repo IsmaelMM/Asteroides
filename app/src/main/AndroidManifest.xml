@@ -28,7 +28,10 @@
         <activity
             android:name=".activity.Puntuaciones"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".activity.Juego" />
+        <activity
+            android:name=".activity.Juego"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>

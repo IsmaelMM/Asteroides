@@ -53,9 +53,14 @@ public class VistaJuego extends View {
 
         // Una vez que conocemos nuestro ancho y alto.
         for (Grafico asteroide : Asteroides) {
-            asteroide.setPosX(Math.random() * (ancho - asteroide.getAncho()));
-            asteroide.setPosY(Math.random() * (alto - asteroide.getAlto()));
+            // Con el buclie do-while nos aseguramos que los asteroidez no aparezcan muy cerca de la nave
+            do{
+                asteroide.setPosX(Math.random()*(ancho-asteroide.getAncho()));
+                asteroide.setPosY(Math.random()*(alto-asteroide.getAlto()));
+            } while(asteroide.distancia(nave) < (ancho+alto)/5);
         }
+
+
     }
 
     @Override
