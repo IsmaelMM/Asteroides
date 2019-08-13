@@ -32,10 +32,8 @@ class Grafico {
         canvas.rotate((float) angulo, cenX, cenY);
         drawable.draw(canvas);
         canvas.restore();
-        view.invalidate(cenX - radioInval, cenY - radioInval,
-                cenX + radioInval, cenY + radioInval);
-        view.invalidate(XAnterior - radioInval, YAnterior - radioInval,
-                XAnterior + radioInval, YAnterior + radioInval);
+        view.invalidate(cenX - radioInval, cenY - radioInval, cenX + radioInval, cenY + radioInval);
+        view.invalidate(XAnterior - radioInval, YAnterior - radioInval, XAnterior + radioInval, YAnterior + radioInval);
         XAnterior = cenX;
         YAnterior = cenY;
     }
@@ -48,11 +46,11 @@ class Grafico {
         if (cenX < 0) cenX = view.getWidth();
         if (cenX > view.getWidth()) cenX = 0;
         if (cenY < 0) cenY = view.getHeight();
-        if (cenY < view.getHeight()) cenY = 0;
+        if (cenY > view.getHeight()) cenY = 0;
     }
 
     public double distancia(Grafico g) {
-        return Math.hypot(cenX - g.cenX, cenY - g.cenY - g.cenY);
+        return Math.hypot(cenX - g.cenX, cenY - g.cenY);
     }
 
     public boolean verificaColision(Grafico g) {
