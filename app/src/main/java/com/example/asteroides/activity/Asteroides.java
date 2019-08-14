@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +28,8 @@ public class Asteroides extends AppCompatActivity {
         TextView texto = (TextView) findViewById(R.id.textView);
         Animation animacion = AnimationUtils.loadAnimation(this, R.anim.animacion);
         texto.startAnimation(animacion);
+
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
     }
 
     public void lanzarJuego(View view) {
@@ -79,5 +82,41 @@ public class Asteroides extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "onRestart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 }
