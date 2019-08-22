@@ -12,18 +12,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.asteroides.AlmacenPuntuaciones;
-import com.example.asteroides.AlmacenPuntuacionesList;
+import com.example.asteroides.puntuacion.AlmacenPuntuaciones;
+import com.example.asteroides.puntuacion.AlmacenPuntuacionesList;
 import com.example.asteroides.R;
+import com.example.asteroides.puntuacion.AlmacenPuntuacionesPreferencias;
 
 public class Asteroides extends AppCompatActivity {
 
     public static AlmacenPuntuaciones almacen = new AlmacenPuntuacionesList();
+    static final int ACTIV_JUEGO = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        almacen = new AlmacenPuntuacionesPreferencias(this);
 
         TextView texto = (TextView) findViewById(R.id.textView);
         Animation animacion = AnimationUtils.loadAnimation(this, R.anim.animacion);
@@ -34,7 +38,21 @@ public class Asteroides extends AppCompatActivity {
 
     public void lanzarJuego(View view) {
         Intent i = new Intent(this, Juego.class);
-        startActivity(i);
+        //startActivity(i);
+        // Modificamos para que nos devuelva la puntuación de la partida
+        startActivityForResult(i, ACTIV_JUEGO);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ACTIV_JUEGO && resultCode == RESULT_OK && data != null) {
+            int puntuacion = data.getExtras().getInt("puntuacion");
+            String nombre = "Yo";
+            // Mejor leer nombre desde un AlertDialog.Builder o preferencias
+            almacen.guardarPuntuacion(puntuacion, nombre, System.currentTimeMillis());
+            lanzarPuntuaciones(null);
+        }
     }
 
     public void lanzarAcercaDe(View view) {

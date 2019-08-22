@@ -1,4 +1,4 @@
-package com.example.asteroides;
+package com.example.asteroides.puntuacion;
 
 import java.util.List;
 

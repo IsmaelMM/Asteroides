@@ -1,6 +1,8 @@
 package com.example.asteroides;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,6 +18,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -103,6 +106,10 @@ public class VistaJuego extends View implements SensorEventListener {
     // //// MULTIMEDIA //////
     SoundPool soundPool;
     int idDisparo, idExplosion;
+
+    // //// PUNTUACIONES //////
+    private int puntuacion = 0;
+    private Activity padre;
 
     public VistaJuego(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -272,6 +279,11 @@ public class VistaJuego extends View implements SensorEventListener {
                     }
             }
         }
+
+        for (Grafico asteroide : Asteroides) {
+            if (asteroide.verificaColision(nave))
+                salir();
+        }
     }
 
     @Override
@@ -414,6 +426,12 @@ public class VistaJuego extends View implements SensorEventListener {
             Asteroides.remove(i);
             misilActivo = false;
         }
+
+        puntuacion += 1000;
+
+        if (Asteroides.isEmpty()) {
+            salir();
+        }
     }
 
     private void activaMisil() {
@@ -451,5 +469,18 @@ public class VistaJuego extends View implements SensorEventListener {
 
     public void desactivarSensores() {
         mSensorManager.unregisterListener(this);
+    }
+
+    public void setPadre(Activity padre) {
+        this.padre = padre;
+    }
+
+    private void salir() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("puntuacion", puntuacion);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        padre.setResult(Activity.RESULT_OK, intent);
+        padre.finish();
     }
 }
